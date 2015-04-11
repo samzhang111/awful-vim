@@ -1,0 +1,13 @@
+https://github.com/godlygeek/tabular.git
+https://github.com/walm/jshint.vim.git
+https://github.com/jelera/vim-javascript-syntax.git
+https://github.com/vim-scripts/JavaScript-Indent.git
+https://github.com/othree/javascript-libraries-syntax.vim.git
+https://github.com/marijnh/tern_for_vim.git
+https://github.com/Raimondi/delimitMate.git
+https://github.com/mattn/emmet-vim.git
+https://github.com/twbs/bootlint.git
+https://github.com/bling/vim-airline
+https://github.com/ervandew/supertab
+https://github.com/scrooloose/syntastic
+https://github.com/airblade/vim-gitgutter
