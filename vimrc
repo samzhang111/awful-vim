@@ -56,6 +56,10 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'guns/vim-sexp'
 Plugin 'tpope/vim-sexp-mappings-for-regular-people'
 
+call vundle#end()
+
+filetype plugin indent on
+
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = ","
