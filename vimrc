@@ -32,12 +32,29 @@
 " Sets how many lines of history VIM has to remember
 set history=700
 
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
+" For Vundle
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-" Set to auto read when a file is changed from the outside
-set autoread
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'godlygeek/tabular'
+Plugin 'walm/jshint.vim'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'vim-scripts/JavaScript-Indent'
+Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'marijnh/tern_for_vim'
+Plugin 'Raimondi/delimitMate'
+Plugin 'mattn/emmet-vim'
+Plugin 'twbs/bootlint'
+Plugin 'vim-airline/vim-airline'
+Plugin 'ervandew/supertab'
+Plugin 'scrooloose/syntastic'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'guns/vim-sexp'
+Plugin 'tpope/vim-sexp-mappings-for-regular-people'
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -109,8 +126,8 @@ set tm=500
 " Enable syntax highlighting
 syntax enable 
 
-colorscheme desert
 set background=dark
+colorscheme desert
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -231,6 +248,8 @@ set laststatus=2
 " Format the status line
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
 
+set fillchars+=stl:^
+set fillchars+=stlnc:-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
@@ -318,75 +337,42 @@ map <leader>q :e ~/buffer<cr>
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
 
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Helper functions
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! CmdLine(str)
-    exe "menu Foo.Bar :" . a:str
-    emenu Foo.Bar
-    unmenu Foo
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+" => Helper functions 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+function! CmdLine(str) 
+    exe "menu Foo.Bar :" . a:str 
+    emenu Foo.Bar 
+    unmenu Foo 
+endfunction  
+ 
+function! VisualSelection(direction) range 
+    let l:saved_reg = @" 
+    execute "normal! vgvy" 
+ 
+    let l:pattern = escape(@", '\\/.*$^~[]') 
+    let l:pattern = substitute(l:pattern, "\n$", "", "") 
+ 
+    if a:direction == 'b' 
+        execute "normal ?" . l:pattern . "^M" 
+    elseif a:direction == 'gv' 
+        call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.') 
+    elseif a:direction == 'replace' 
+        call CmdLine("%s" . '/'. l:pattern . '/') 
+    elseif a:direction == 'f' 
+        execute "normal /" . l:pattern . "^M" 
+    endif 
+ 
+    let @/ = l:pattern 
+    let @" = l:saved_reg 
+endfunction 
+ 
+ 
+" Returns true if paste mode is enabled 
+function! HasPaste() 
+    if &paste 
+        return 'PASTE MODE  ' 
+    en 
+    return '' 
 endfunction 
 
-function! VisualSelection(direction) range
-    let l:saved_reg = @"
-    execute "normal! vgvy"
-
-    let l:pattern = escape(@", '\\/.*$^~[]')
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-    if a:direction == 'b'
-        execute "normal ?" . l:pattern . "^M"
-    elseif a:direction == 'gv'
-        call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
-    elseif a:direction == 'replace'
-        call CmdLine("%s" . '/'. l:pattern . '/')
-    elseif a:direction == 'f'
-        execute "normal /" . l:pattern . "^M"
-    endif
-
-    let @/ = l:pattern
-    let @" = l:saved_reg
-endfunction
-
-
-" Returns true if paste mode is enabled
-function! HasPaste()
-    if &paste
-        return 'PASTE MODE  '
-    en
-    return ''
-endfunction
-
-" Don't close window, when deleting a buffer
-command! Bclose call <SID>BufcloseCloseIt()
-function! <SID>BufcloseCloseIt()
-   let l:currentBufNum = bufnr("%")
-   let l:alternateBufNum = bufnr("#")
-
-   if buflisted(l:alternateBufNum)
-     buffer #
-   else
-     bnext
-   endif
-
-   if bufnr("%") == l:currentBufNum
-     new
-   endif
-
-   if buflisted(l:currentBufNum)
-     execute("bdelete! ".l:currentBufNum)
-   endif
-endfunction
-
-execute pathogen#infect()
-
-map ,tr :TernRename<CR>
-map ,td :TernDef<CR>
-map ,th :TernDoc<CR>
-map ,ta :TernRefs<CR>
-map ,tt :TernType<CR>
-
-map <F2> :mksession! ~/.vim_session<CR>
-map <F3> :source ~/.vim_session<CR>
