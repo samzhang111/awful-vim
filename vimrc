@@ -55,10 +55,22 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'guns/vim-sexp'
 Plugin 'tpope/vim-sexp-mappings-for-regular-people'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'guns/vim-clojure-static'
 
 call vundle#end()
 
 filetype plugin indent on
+
+"""""" Clojure:
+" Turn on Rainbow parantheses:
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+" Fix indentation
+let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let', '^describe', '^context', '^it', '^GET', '^POST']
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
