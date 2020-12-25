@@ -6,5 +6,6 @@ pushd ~/.vim/bundle
     git clone https://github.com/VundleVim/Vundle.vim.git
 popd
 
-ln -s vimrc ~/.vimrc
+ln -s $DIR/vimrc ~/.vimrc
 
+vim -c ":PluginInstall"

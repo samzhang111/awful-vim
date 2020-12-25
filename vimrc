@@ -35,30 +35,62 @@ set history=700
 " For Vundle
 set nocompatible
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/bundle')
 
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'godlygeek/tabular'
-Plugin 'walm/jshint.vim'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'vim-scripts/JavaScript-Indent'
-Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'marijnh/tern_for_vim'
-Plugin 'Raimondi/delimitMate'
-Plugin 'mattn/emmet-vim'
-Plugin 'twbs/bootlint'
-Plugin 'vim-airline/vim-airline'
-Plugin 'ervandew/supertab'
-Plugin 'scrooloose/syntastic'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'guns/vim-sexp'
-Plugin 'tpope/vim-sexp-mappings-for-regular-people'
-Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'guns/vim-clojure-static'
+Plug 'romainl/vim-cool'
+Plug 'godlygeek/tabular'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sleuth'
 
-call vundle#end()
+" Snippets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
+" Tex
+Plug 'lervag/vimtex'
+
+" Factor
+Plug 'brandonbloom/vim-factor'
+
+" Scala
+Plug 'derekwyatt/vim-scala'
+
+" Javascript
+Plug 'pangloss/vim-javascript'
+Plug 'isRuslan/vim-es6'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'mxw/vim-jsx'
+
+" GraphQL
+Plug 'jparise/vim-graphql'
+
+" UI
+Plug 'airblade/vim-gitgutter'
+
+"Clojure
+Plug 'altercation/vim-colors-solarized'
+Plug 'guns/vim-sexp'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'guns/vim-clojure-static'
+
+"Ruby
+Plug 'vim-ruby/vim-ruby'
+Plug 'thoughtbot/vim-rspec'
+
+"Stan
+Plug 'maverickg/stan.vim'
+
+" Go
+Plug 'fatih/vim-go'
+
+"Python
+Plug 'python-mode/python-mode', { 'branch': 'develop' }
+Plug 'ivanov/vim-ipython'
+"Plug 'davidhalter/jedi-vim' "slow?
+
+call plug#end()
 
 filetype plugin indent on
 
@@ -80,6 +112,7 @@ let g:mapleader = ","
 " Fast saving
 nmap <leader>w :w!<cr>
 
+map <c-f> :FZF<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -175,12 +208,15 @@ set noswapfile
 " Use spaces instead of tabs
 set expandtab
 
+" make substitutions global by default
+set gdefault
+
 " Be smart when using tabs ;)
 set smarttab
 
 " 1 tab == 4 spaces
-set shiftwidth=4
 set tabstop=4
+set shiftwidth=4
 
 " Linebreak on 500 characters
 set lbr
@@ -295,6 +331,8 @@ endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
+autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
+autocmd FileType javascript setlocal ts=4 sts=4 sw=4
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vimgrep searching and cope displaying
@@ -392,3 +430,18 @@ function! HasPaste()
     return '' 
 endfunction 
 
+set shell=/bin/bash
+let g:pymode_rope = 0
+let g:pymode_folding = 0
+let g:pymode_python = 'python3'
+
+let g:vimtex_view_method = 'zathura'
+let g:vimtex_latexmk_continuous = 1
+
+" Make jedi-vim not untolerably slow
+let g:pymode_rope = 0
+
+set undofile
+set undodir=$HOME/.vim/undo
+
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips/']

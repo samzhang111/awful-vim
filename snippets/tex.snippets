@@ -1,0 +1,75 @@
+priority -50
+
+##############
+# Starting a file
+##############
+
+snippet {{ "braces" w
+\left\lbrace ${1} \right\rbrace ${2}
+endsnippet
+
+snippet verts "verts" w
+\left\vert ${1} \right\rvert ${2}
+endsnippet
+
+snippet (( "parens" w
+\left(${1} \right) ${2}
+endsnippet
+
+snippet [[ "squares" w
+\left[${1} \right] ${2}
+endsnippet
+
+snippet proof "Proof" b
+\begin{proof}
+	${0:${VISUAL}}
+\end{proof}
+endsnippet
+
+snippet thm "Theorem" w
+\begin{theorem}
+	${0:${VISUAL}}
+\end{theorem}
+endsnippet
+
+snippet lem "Lemma" w
+\begin{lemma}
+	${0:${VISUAL}}
+\end{lemma}
+endsnippet
+
+snippet prop "Proposition" w
+\begin{proposition}
+	${0:${VISUAL}}
+\end{proposition}
+endsnippet
+
+snippet cor "Corollary" w
+\begin{corollary}
+	${0:${VISUAL}}
+\end{corollary}
+endsnippet
+
+snippet def "Definition" w
+\begin{definition}
+	${0:${VISUAL}}
+\end{definition}
+endsnippet
+
+snippet ex "Example" w
+\begin{example}
+	${0:${VISUAL}}
+\end{example}
+endsnippet
+
+snippet align "Align" w
+\begin{align}
+	${0:${VISUAL}}
+\end{align}
+endsnippet
+
+snippet align* "Align" w
+\begin{align*}
+	${0:${VISUAL}}
+\end{align*}
+endsnippet
